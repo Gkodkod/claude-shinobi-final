@@ -16,6 +16,7 @@
   --warning: #f59e0b;
   --danger: #ef4444;
   --info: #3b82f6;
+  --highlight: #fef3c7;
   --surface: #ffffff;
   --border: #e5e7eb;
 }
@@ -31,6 +32,7 @@
   --warning: #d97706;
   --danger: #dc2626;
   --info: #2563eb;
+  --highlight: #fbbf24;
   --surface: #1f1b21;
   --border: #3a3543ff;
 }
@@ -46,6 +48,7 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-info: var(--info);
+  --color-highlight: var(--highlight);
   --color-surface: var(--surface);
   --color-border: var(--border);
   --font-primary: "Rubik", sans-serif;
