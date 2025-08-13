@@ -1,3 +1,5 @@
+import Avatar from '@/components/ui/Avatar/Avatar'
+
 export default function BlogSidebar() {
   return (
     <div className="sticky top-8 space-y-8">
@@ -34,13 +36,13 @@ export default function BlogSidebar() {
         <h3 className="text-xl font-bold mb-4 text-foreground">Recent Activity</h3>
         <div className="space-y-4">
           {[
-            { action: 'New post published', time: '2 hours ago' },
-            { action: 'Comment on "React Tips"', time: '1 day ago' },
-            { action: 'Post updated', time: '3 days ago' },
-            { action: 'New subscriber', time: '1 week ago' }
+            { action: 'New post published', time: '2 hours ago', user: 'Alice Johnson' },
+            { action: 'Comment on "React Tips"', time: '1 day ago', user: 'Bob Smith' },
+            { action: 'Post updated', time: '3 days ago', user: 'Carol Davis' },
+            { action: 'New subscriber', time: '1 week ago', user: 'David Wilson' }
           ].map((item, index) => (
             <div key={index} className="flex items-start space-x-3">
-              <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+              <Avatar name={item.user} size="sm" variant="primary" />
               <div>
                 <p className="text-sm text-muted">{item.action}</p>
                 <p className="text-xs text-muted/60">{item.time}</p>

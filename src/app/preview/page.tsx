@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/ui/Button/Button";
+import Avatar from "@/components/ui/Avatar/Avatar";
 
 export default function Preview() {
   return (
@@ -97,6 +98,114 @@ export default function Preview() {
           Delete Account
         </Button>
       </div>
+      </section>
+
+      <section style={{ marginTop: '3rem' }}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Avatar Component</h2>
+        <p style={{ marginBottom: '1.5rem', maxWidth: '500px' }}>
+          Display user initials with customizable sizes and color variants for profiles and user identification.
+        </p>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Sizes</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center' }}>
+            <Avatar name="John Doe" size="sm" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Small</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Avatar name="Jane Smith" size="md" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Medium</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Avatar name="Bob Wilson" size="lg" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Large</p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <Avatar name="Alice Johnson" size="xl" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>X-Large</p>
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Color Variants</h3>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+            <Avatar name="Primary User" variant="primary" size="lg" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Primary</p>
+          </div>
+          <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+            <Avatar name="Secondary User" variant="secondary" size="lg" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Secondary</p>
+          </div>
+          <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+            <Avatar name="Success User" variant="success" size="lg" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Success</p>
+          </div>
+          <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+            <Avatar name="Gradient User" variant="gradient" size="lg" />
+            <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--muted)' }}>Gradient</p>
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Practical Examples</h3>
+        
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>User Profile</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+            <Avatar name="Sarah Connor" size="xl" />
+            <div>
+              <h5 style={{ fontWeight: '600', margin: '0 0 0.25rem 0', color: 'var(--foreground)' }}>Sarah Connor</h5>
+              <p style={{ margin: '0 0 0.25rem 0', color: 'var(--muted)' }}>Software Engineer</p>
+              <p style={{ fontSize: '0.8rem', margin: '0', color: 'var(--muted)' }}>sarah.connor@example.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Comment Thread</h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {[
+              { name: 'Mike Ross', comment: 'Great article! Really helpful insights.' },
+              { name: 'Rachel Green', comment: 'Thanks for sharing this. The examples were very clear.' }
+            ].map((item, index) => (
+              <div key={index} style={{ display: 'flex', alignItems: 'start', gap: '0.75rem', padding: '1rem', backgroundColor: 'var(--surface)', borderRadius: '0.5rem' }}>
+                <Avatar name={item.name} size="md" variant="gradient" />
+                <div>
+                  <h6 style={{ fontWeight: '500', margin: '0 0 0.25rem 0', color: 'var(--foreground)' }}>{item.name}</h6>
+                  <p style={{ margin: '0', color: 'var(--muted)' }}>{item.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Team Members</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '-0.5rem' }}>
+            <div style={{ display: 'flex', marginRight: '-0.5rem' }}>
+              {['Alex Kim', 'Jordan Lee', 'Taylor Swift', 'Morgan Freeman'].map((name, index) => (
+                <div key={index} style={{ marginLeft: index > 0 ? '-0.5rem' : '0', border: '2px solid var(--background)', borderRadius: '50%' }}>
+                  <Avatar name={name} size="lg" />
+                </div>
+              ))}
+            </div>
+            <div style={{ 
+              width: '3rem', 
+              height: '3rem', 
+              backgroundColor: 'var(--muted)', 
+              border: '2px solid var(--background)', 
+              borderRadius: '50%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              fontSize: '0.8rem', 
+              fontWeight: '500', 
+              color: 'var(--background)',
+              marginLeft: '-0.5rem'
+            }}>
+              +3
+            </div>
+          </div>
+        </div>
       </section>
 
       <section style={{ marginTop: '3rem' }}>
