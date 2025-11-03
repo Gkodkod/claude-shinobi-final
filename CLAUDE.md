@@ -34,7 +34,13 @@ src/
 │   ├── blog/              # Blog listing and individual posts
 │   └── preview/           # Component preview page
 ├── components/            # Reusable React components
-│   ├── ui/Button/         # Button component with variants
+│   ├── ui/                # UI component library
+│   │   ├── Avatar/        # Avatar component with initials display
+│   │   ├── Button/        # Button component with variants and sizes
+│   │   ├── Calendar/      # Calendar component with date/range selection
+│   │   ├── Card/          # Card container component with variants
+│   │   ├── Icon/          # Icon wrapper component with styling
+│   │   └── Modal/         # Modal dialog component
 │   ├── BlogSidebar.tsx    # Blog page sidebar
 │   └── DarkModeToggle.tsx # Theme switching component
 ├── hooks/                 # Reusable hooks

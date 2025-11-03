@@ -5,12 +5,15 @@ import Avatar from "@/components/ui/Avatar/Avatar";
 import Card from "@/components/ui/Card/Card";
 import Icon from "@/components/ui/Icon/Icon";
 import Modal from "@/components/ui/Modal/Modal";
+import Calendar from "@/components/ui/Calendar/Calendar";
 import { Star, Rocket, Gem, Target, Zap, Check, AlertTriangle, Flame, Home, Settings, ThumbsUp, Bell, Trash2, FileText, Camera, Paperclip, BarChart3, Link2, Circle } from "lucide-react";
 
 export default function Preview() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalVariant, setModalVariant] = useState<'primary' | 'secondary' | 'success' | 'danger' | 'warning'>('primary');
   const [modalSize, setModalSize] = useState<'sm' | 'md' | 'lg'>('md');
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedRange, setSelectedRange] = useState<{ start: Date; end: Date } | undefined>(undefined);
 
   const openModal = (variant: typeof modalVariant, size: typeof modalSize = 'md') => {
     setModalVariant(variant);
@@ -496,6 +499,128 @@ export default function Preview() {
           </div>
         </div>
       </Modal>
+
+      <section style={{ marginTop: '3rem' }}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Calendar Component</h2>
+        <p style={{ marginBottom: '1.5rem', maxWidth: '500px' }}>
+          Interactive calendar with date selection, navigation, and customizable styling for scheduling and date picking.
+        </p>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Variants</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Primary</p>
+            <Calendar
+              variant="primary"
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+              highlightedDates={[
+                new Date(new Date().setDate(new Date().getDate() - 3)),
+                new Date(new Date().setDate(new Date().getDate() + 5)),
+                new Date(new Date().setDate(new Date().getDate() + 10))
+              ]}
+            />
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Success</p>
+            <Calendar
+              variant="success"
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Sizes</h3>
+        <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '2rem', alignItems: 'flex-start' }}>
+          <div style={{ width: '280px' }}>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Small</p>
+            <Calendar
+              size="sm"
+              variant="primary"
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+            />
+          </div>
+
+          <div style={{ width: '360px' }}>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Medium</p>
+            <Calendar
+              size="md"
+              variant="secondary"
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+            />
+          </div>
+
+          <div style={{ flex: '1' }}>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Large</p>
+            <Calendar
+              size="lg"
+              variant="danger"
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Features</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
+          <Card variant="primary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>📅 Date Selection</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Click to select dates</p>
+          </Card>
+          <Card variant="secondary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>⬅️ ➡️ Month Navigation</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Navigate between months</p>
+          </Card>
+          <Card variant="success" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>✨ Highlighted Dates</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Mark important dates</p>
+          </Card>
+          <Card variant="warning" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>⌨️ Keyboard Support</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Enter or Space to select</p>
+          </Card>
+          <Card variant="danger" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>🚫 Date Constraints</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Min/Max date ranges</p>
+          </Card>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Practical Example: Date Range Picker</h3>
+        <div style={{ maxWidth: '450px' }}>
+          <Card variant="primary" size="lg">
+            <h4 style={{ margin: '0 0 1rem 0', fontSize: '1.2rem', textAlign: 'center' }}>Select a Date Range</h4>
+            <Calendar
+              variant="primary"
+              size="md"
+              allowRangeSelection={true}
+              selectedRange={selectedRange}
+              onRangeSelect={(range) => {
+                setSelectedRange(range);
+                console.log('Selected range:', range);
+              }}
+              minDate={new Date()}
+              highlightedDates={[
+                new Date(new Date().setDate(new Date().getDate() + 7)),
+                new Date(new Date().setDate(new Date().getDate() + 14))
+              ]}
+            />
+            <div style={{ marginTop: '1rem', padding: '0.75rem', backgroundColor: 'var(--primary)/10', borderRadius: '0.5rem', textAlign: 'center' }}>
+              <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary)' }}>
+                Selected Range:
+              </p>
+              <p style={{ margin: '0', fontSize: '0.9rem', color: 'var(--foreground)' }}>
+                {selectedRange
+                  ? `${selectedRange.start.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${selectedRange.end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                  : 'Click a start date, then click an end date'}
+              </p>
+            </div>
+          </Card>
+        </div>
+      </section>
 
       <section style={{ marginTop: '3rem' }}>
         <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Typography Hierarchy</h2>
