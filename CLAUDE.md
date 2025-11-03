@@ -47,7 +47,8 @@ src/
 └── lib/                   # Utility functions and types
     ├── queries.ts         # GraphQL queries for blog data
     ├── types.ts           # TypeScript type definitions
-    └── sanitize.ts        # HTML sanitization utilities
+    ├── sanitize.ts        # HTML sanitization utilities
+    └── mockData.ts        # 120 mock blog posts for development
 ```
 
 ### Data Architecture
@@ -64,7 +65,7 @@ The blog works in two modes:
 
 1. **Development Mode (Default)**: Uses mock blog posts from `src/lib/mockData.ts`
    - No setup required - just run the app
-   - Includes 4 sample blog posts about web development
+   - Includes 120 sample blog posts about AI tools, Vite, MCP, and modern web development
    - Perfect for UI development and testing
 
 2. **Production Mode (Optional)**: Fetches real content from Hygraph CMS
@@ -79,6 +80,16 @@ The blog works in two modes:
      ```
      HYGRAPH_ENDPOINT=https://your-region.hygraph.com/v2/your-project-id/master
      ```
+
+#### Blog Features
+
+- **Dynamic Categories**: Keyword-based categorization system automatically categorizes posts
+  - Categories include: Vite, ChatGPT & OpenAI, Claude & Anthropic, GitHub Copilot, Google Gemini, Grok, AI Editors, AI Agents, MCP, RAG & Embeddings, Prompt Engineering, General
+  - Category filtering via URL query parameters (`/blog?category=...`)
+  - Server-side filtering for optimal performance
+- **Scrollable Sidebar**: Sticky sidebar with overflow scrolling to display all categories
+- **Next.js 15 Compatibility**: Uses async params and searchParams pattern
+- **Category Highlighting**: Active category is highlighted in sidebar based on URL state
 
 ### Styling System
 
@@ -101,6 +112,9 @@ The blog works in two modes:
 - Dark mode state is managed via CSS classes on root element
 - Component testing follows React Testing Library patterns
 - HTML sanitization is critical for security when displaying CMS content
+- Next.js 15 requires awaiting `params` and `searchParams` before accessing properties
+- Category filtering is implemented server-side for better performance
+- BlogSidebar and blog page share the same `categorizePost` function logic
 
 - when making new page components, always add a link to that page in the header. Only do this for page components, not UI or other drop-in components.
 

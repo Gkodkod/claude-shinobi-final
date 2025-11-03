@@ -6,6 +6,8 @@ import Card from "@/components/ui/Card/Card";
 import Icon from "@/components/ui/Icon/Icon";
 import Modal from "@/components/ui/Modal/Modal";
 import Calendar from "@/components/ui/Calendar/Calendar";
+import SpreadsheetGrid from "@/components/ui/SpreadsheetGrid/SpreadsheetGrid";
+import type { ColumnDef, CellData, SortConfig } from "@/components/ui/SpreadsheetGrid/SpreadsheetGrid";
 import { Star, Rocket, Gem, Target, Zap, Check, AlertTriangle, Flame, Home, Settings, ThumbsUp, Bell, Trash2, FileText, Camera, Paperclip, BarChart3, Link2, Circle } from "lucide-react";
 
 export default function Preview() {
@@ -14,6 +16,61 @@ export default function Preview() {
   const [modalSize, setModalSize] = useState<'sm' | 'md' | 'lg'>('md');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedRange, setSelectedRange] = useState<{ start: Date; end: Date } | undefined>(undefined);
+
+  // SpreadsheetGrid data
+  const spreadsheetColumns: ColumnDef[] = [
+    { header: 'Name', key: 'name', width: '200px' },
+    { header: 'Email', key: 'email', width: '250px' },
+    { header: 'Role', key: 'role', width: '150px' },
+    { header: 'Status', key: 'status', width: '120px' }
+  ];
+
+  const [spreadsheetData, setSpreadsheetData] = useState<Record<string, CellData>[]>([
+    {
+      name: { value: 'Alice Johnson', editable: true },
+      email: { value: 'alice.j@example.com', editable: true },
+      role: { value: 'Developer', editable: true },
+      status: { value: 'Active', editable: true }
+    },
+    {
+      name: { value: 'Bob Smith', editable: true },
+      email: { value: 'bob.smith@example.com', editable: true },
+      role: { value: 'Designer', editable: true },
+      status: { value: 'Active', editable: true }
+    },
+    {
+      name: { value: 'Charlie Brown', editable: true },
+      email: { value: 'charlie.b@example.com', editable: true },
+      role: { value: 'Manager', editable: true },
+      status: { value: 'Inactive', editable: true }
+    },
+    {
+      name: { value: 'Diana Prince', editable: true },
+      email: { value: 'diana.p@example.com', editable: true },
+      role: { value: 'Developer', editable: true },
+      status: { value: 'Active', editable: true }
+    },
+    {
+      name: { value: 'Eve Martinez', editable: true },
+      email: { value: 'eve.m@example.com', editable: true },
+      role: { value: 'Analyst', editable: true },
+      status: { value: 'Active', editable: true }
+    }
+  ]);
+
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+
+  const handleCellChange = (rowIndex: number, columnKey: string, value: string) => {
+    const newData = [...spreadsheetData];
+    newData[rowIndex][columnKey].value = value;
+    setSpreadsheetData(newData);
+    console.log(`Cell updated: Row ${rowIndex}, Column ${columnKey}, New value: ${value}`);
+  };
+
+  const handleSortChange = (newSortConfig: SortConfig | null) => {
+    setSortConfig(newSortConfig);
+    console.log('Sort changed:', newSortConfig);
+  };
 
   const openModal = (variant: typeof modalVariant, size: typeof modalSize = 'md') => {
     setModalVariant(variant);
@@ -619,6 +676,166 @@ export default function Preview() {
               </p>
             </div>
           </Card>
+        </div>
+      </section>
+
+      <section style={{ marginTop: '3rem' }}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>SpreadsheetGrid Component</h2>
+        <p style={{ marginBottom: '1.5rem', maxWidth: '500px' }}>
+          A spreadsheet-like grid component for displaying and editing tabular data with keyboard navigation and cell editing capabilities.
+        </p>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Variants</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '2rem' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Primary</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData}
+              variant="primary"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Success</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData}
+              variant="success"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Danger</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData}
+              variant="danger"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Sizes</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '2rem' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Small</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData.slice(0, 3)}
+              variant="secondary"
+              size="sm"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Medium</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData.slice(0, 3)}
+              variant="primary"
+              size="md"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Large</p>
+            <SpreadsheetGrid
+              columns={spreadsheetColumns}
+              data={spreadsheetData.slice(0, 3)}
+              variant="warning"
+              size="lg"
+              editable={true}
+              onCellChange={handleCellChange}
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Features</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          <Card variant="primary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>✏️ Cell Editing</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Click cells to edit values</p>
+          </Card>
+          <Card variant="secondary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>⌨️ Keyboard Navigation</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Arrow keys to navigate</p>
+          </Card>
+          <Card variant="success" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>🔢 Row Numbers</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Optional row numbering</p>
+          </Card>
+          <Card variant="warning" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>🎨 Color Variants</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Multiple color themes</p>
+          </Card>
+          <Card variant="danger" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>🚫 Disabled State</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Prevent user interaction</p>
+          </Card>
+          <Card variant="primary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>↕️ Column Sorting</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Sort ascending/descending</p>
+          </Card>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Practical Examples</h3>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Team Directory with Sorting</h4>
+          <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--muted)' }}>
+            Click any cell to edit. Click column headers to sort (ascending → descending → unsorted). Changes are logged to console.
+          </p>
+          <SpreadsheetGrid
+            columns={spreadsheetColumns}
+            data={spreadsheetData}
+            variant="primary"
+            size="md"
+            editable={true}
+            onCellChange={handleCellChange}
+            sortConfig={sortConfig}
+            onSortChange={handleSortChange}
+            showRowNumbers={true}
+          />
+        </div>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Read-Only View</h4>
+          <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--muted)' }}>
+            Non-editable grid for displaying data.
+          </p>
+          <SpreadsheetGrid
+            columns={spreadsheetColumns}
+            data={spreadsheetData}
+            variant="secondary"
+            size="md"
+            editable={false}
+            showRowNumbers={true}
+          />
+        </div>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Disabled Grid</h4>
+          <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--muted)' }}>
+            Grid in disabled state with reduced opacity.
+          </p>
+          <SpreadsheetGrid
+            columns={spreadsheetColumns}
+            data={spreadsheetData}
+            variant="danger"
+            size="md"
+            disabled={true}
+            showRowNumbers={true}
+          />
         </div>
       </section>
 
