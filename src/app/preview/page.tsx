@@ -58,18 +58,21 @@ export default function Preview() {
     }
   ]);
 
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  // Separate sort states for each grid
+  const [sortConfigPrimary, setSortConfigPrimary] = useState<SortConfig | null>(null);
+  const [sortConfigSuccess, setSortConfigSuccess] = useState<SortConfig | null>(null);
+  const [sortConfigDanger, setSortConfigDanger] = useState<SortConfig | null>(null);
+  const [sortConfigSmall, setSortConfigSmall] = useState<SortConfig | null>(null);
+  const [sortConfigMedium, setSortConfigMedium] = useState<SortConfig | null>(null);
+  const [sortConfigLarge, setSortConfigLarge] = useState<SortConfig | null>(null);
+  const [sortConfigMain, setSortConfigMain] = useState<SortConfig | null>(null);
+  const [sortConfigReadOnly, setSortConfigReadOnly] = useState<SortConfig | null>(null);
 
   const handleCellChange = (rowIndex: number, columnKey: string, value: string) => {
     const newData = [...spreadsheetData];
     newData[rowIndex][columnKey].value = value;
     setSpreadsheetData(newData);
     console.log(`Cell updated: Row ${rowIndex}, Column ${columnKey}, New value: ${value}`);
-  };
-
-  const handleSortChange = (newSortConfig: SortConfig | null) => {
-    setSortConfig(newSortConfig);
-    console.log('Sort changed:', newSortConfig);
   };
 
   const openModal = (variant: typeof modalVariant, size: typeof modalSize = 'md') => {
@@ -681,8 +684,8 @@ export default function Preview() {
 
       <section style={{ marginTop: '3rem' }}>
         <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>SpreadsheetGrid Component</h2>
-        <p style={{ marginBottom: '1.5rem', maxWidth: '500px' }}>
-          A spreadsheet-like grid component for displaying and editing tabular data with keyboard navigation and cell editing capabilities.
+        <p style={{ marginBottom: '1.5rem', maxWidth: '600px' }}>
+          A spreadsheet-like grid component for displaying and editing tabular data with keyboard navigation and cell editing capabilities. <strong>All grids support column sorting</strong> - click any column header to sort (ascending → descending → unsorted).
         </p>
 
         <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Variants</h3>
@@ -695,6 +698,8 @@ export default function Preview() {
               variant="primary"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigPrimary}
+              onSortChange={setSortConfigPrimary}
             />
           </div>
 
@@ -706,6 +711,8 @@ export default function Preview() {
               variant="success"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigSuccess}
+              onSortChange={setSortConfigSuccess}
             />
           </div>
 
@@ -717,6 +724,8 @@ export default function Preview() {
               variant="danger"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigDanger}
+              onSortChange={setSortConfigDanger}
             />
           </div>
         </div>
@@ -732,6 +741,8 @@ export default function Preview() {
               size="sm"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigSmall}
+              onSortChange={setSortConfigSmall}
             />
           </div>
 
@@ -744,6 +755,8 @@ export default function Preview() {
               size="md"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigMedium}
+              onSortChange={setSortConfigMedium}
             />
           </div>
 
@@ -756,6 +769,8 @@ export default function Preview() {
               size="lg"
               editable={true}
               onCellChange={handleCellChange}
+              sortConfig={sortConfigLarge}
+              onSortChange={setSortConfigLarge}
             />
           </div>
         </div>
@@ -802,8 +817,8 @@ export default function Preview() {
             size="md"
             editable={true}
             onCellChange={handleCellChange}
-            sortConfig={sortConfig}
-            onSortChange={handleSortChange}
+            sortConfig={sortConfigMain}
+            onSortChange={setSortConfigMain}
             showRowNumbers={true}
           />
         </div>
@@ -811,7 +826,7 @@ export default function Preview() {
         <div style={{ marginBottom: '1.5rem' }}>
           <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>Read-Only View</h4>
           <p style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--muted)' }}>
-            Non-editable grid for displaying data.
+            Non-editable grid for displaying data. Click column headers to sort.
           </p>
           <SpreadsheetGrid
             columns={spreadsheetColumns}
@@ -819,6 +834,8 @@ export default function Preview() {
             variant="secondary"
             size="md"
             editable={false}
+            sortConfig={sortConfigReadOnly}
+            onSortChange={setSortConfigReadOnly}
             showRowNumbers={true}
           />
         </div>
