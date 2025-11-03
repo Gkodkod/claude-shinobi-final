@@ -52,10 +52,33 @@ src/
 
 ### Data Architecture
 
-- **External CMS**: Uses Hygraph (GraphQL CMS) for blog content
-- **Environment Variables**: Requires `HYGRAPH_ENDPOINT` for GraphQL API
+- **External CMS**: Uses Hygraph (GraphQL CMS) for blog content (optional)
+- **Mock Data Fallback**: App includes sample blog posts when Hygraph is not configured
+- **Environment Variables**: Optional `HYGRAPH_ENDPOINT` for GraphQL API
 - **Data Fetching**: Server-side rendering with 1-hour revalidation
 - **Content Security**: HTML content is sanitized using DOMPurify with strict allowlists
+
+#### Blog Content Setup
+
+The blog works in two modes:
+
+1. **Development Mode (Default)**: Uses mock blog posts from `src/lib/mockData.ts`
+   - No setup required - just run the app
+   - Includes 4 sample blog posts about web development
+   - Perfect for UI development and testing
+
+2. **Production Mode (Optional)**: Fetches real content from Hygraph CMS
+   - Create a free account at [hygraph.com](https://hygraph.com)
+   - Set up a blog content model with these fields:
+     - `blogTitle` (String)
+     - `blogPostSlug` (String, unique)
+     - `blogPostContent` (Rich Text)
+     - `createdBy` (Reference to User)
+     - `createdAt` (DateTime)
+   - Add your Hygraph endpoint to `.env.local`:
+     ```
+     HYGRAPH_ENDPOINT=https://your-region.hygraph.com/v2/your-project-id/master
+     ```
 
 ### Styling System
 
@@ -74,7 +97,7 @@ src/
 ## Development Notes
 
 - Uses `@/*` path alias for src imports
-- Blog posts require GraphQL endpoint configuration
+- Blog works with mock data by default (Hygraph CMS is optional)
 - Dark mode state is managed via CSS classes on root element
 - Component testing follows React Testing Library patterns
 - HTML sanitization is critical for security when displaying CMS content

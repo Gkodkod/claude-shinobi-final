@@ -1,8 +1,39 @@
 import Avatar from '@/components/ui/Avatar/Avatar'
+import { BlogPost } from '@/lib/types'
+import Link from 'next/link'
 
-export default function BlogSidebar() {
+// Function to categorize posts based on title keywords
+function categorizePost(title: string): string {
+  const titleLower = title.toLowerCase()
+
+  if (titleLower.includes('vite')) return 'Vite'
+  if (titleLower.includes('chatgpt') || titleLower.includes('gpt-4') || titleLower.includes('openai')) return 'ChatGPT & OpenAI'
+  if (titleLower.includes('claude') || titleLower.includes('anthropic')) return 'Claude & Anthropic'
+  if (titleLower.includes('copilot') || titleLower.includes('github')) return 'GitHub Copilot'
+  if (titleLower.includes('gemini') || titleLower.includes('google')) return 'Google Gemini'
+  if (titleLower.includes('grok') || titleLower.includes('x.ai')) return 'Grok'
+  if (titleLower.includes('cursor') || titleLower.includes('continue') || titleLower.includes('codeium')) return 'AI Editors'
+  if (titleLower.includes('agent') || titleLower.includes('autogpt') || titleLower.includes('langchain') || titleLower.includes('crewai')) return 'AI Agents'
+  if (titleLower.includes('mcp') || titleLower.includes('model context protocol')) return 'MCP'
+  if (titleLower.includes('rag') || titleLower.includes('vector') || titleLower.includes('embedding') || titleLower.includes('semantic search')) return 'RAG & Embeddings'
+  if (titleLower.includes('prompt')) return 'Prompt Engineering'
+
+  return 'General'
+}
+
+export default function BlogSidebar({ posts, selectedCategory }: { posts: BlogPost[], selectedCategory?: string | null }) {
+  // Calculate category counts
+  const categoryCounts = posts.reduce((acc, post) => {
+    const category = categorizePost(post.blogTitle)
+    acc[category] = (acc[category] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+
+  // Sort categories by count (descending) - show all categories
+  const allCategories = Object.entries(categoryCounts)
+    .sort(([, a], [, b]) => b - a)
   return (
-    <div className="sticky top-8 space-y-8">
+    <div className="sticky top-8 space-y-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-2">
       {/* About Section */}
       <div className="pb-8 border-b border-border">
         <h3 className="text-xl font-bold mb-4 text-foreground">About This Blog</h3>
@@ -18,15 +49,30 @@ export default function BlogSidebar() {
       <div className="pb-8 border-b border-border">
         <h3 className="text-xl font-bold mb-4 text-foreground">Categories</h3>
         <div className="space-y-2">
-          {['Web Development', 'Design', 'JavaScript', 'React', 'CSS', 'Performance'].map((category) => (
-            <div key={category} className="flex items-center justify-between">
-              <span className="text-muted text-sm hover:text-primary cursor-pointer transition-colors">
+          {/* All Posts Link */}
+          <Link href="/blog" className="flex items-center justify-between group">
+            <span className={`text-sm transition-colors ${!selectedCategory ? 'text-primary font-semibold' : 'text-muted hover:text-primary'}`}>
+              All Posts
+            </span>
+            <span className="text-xs text-muted/60 bg-primary/10 px-2 py-1 rounded-full">
+              {posts.length}
+            </span>
+          </Link>
+
+          {/* Category Links */}
+          {allCategories.map(([category, count]) => (
+            <Link
+              key={category}
+              href={`/blog?category=${encodeURIComponent(category)}`}
+              className="flex items-center justify-between group"
+            >
+              <span className={`text-sm transition-colors ${selectedCategory === category ? 'text-primary font-semibold' : 'text-muted group-hover:text-primary'}`}>
                 {category}
               </span>
               <span className="text-xs text-muted/60 bg-primary/10 px-2 py-1 rounded-full">
-                {Math.floor(Math.random() * 12) + 1}
+                {count}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,13 +1,20 @@
 import { sanitizeHTML } from '@/lib/sanitize'
 import { GET_SINGLE_POST } from '@/lib/queries'
 import { BlogPost } from '@/lib/types'
+import { getMockPostBySlug } from '@/lib/mockData'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Avatar from '@/components/ui/Avatar/Avatar'
 import styles from './BlogPost.module.css'
 
 async function getSinglePost(slug: string): Promise<BlogPost | null> {
-  const response = await fetch(process.env.HYGRAPH_ENDPOINT!, {
+  // Use mock data if Hygraph endpoint is not configured
+  if (!process.env.HYGRAPH_ENDPOINT) {
+    console.log('Using mock blog data - HYGRAPH_ENDPOINT not configured')
+    return getMockPostBySlug(slug)
+  }
+
+  const response = await fetch(process.env.HYGRAPH_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +31,7 @@ async function getSinglePost(slug: string): Promise<BlogPost | null> {
   }
 
   const json = await response.json()
-  
+
   if (json.errors) {
     throw new Error(`GraphQL errors: ${JSON.stringify(json.errors)}`)
   }
@@ -32,12 +39,13 @@ async function getSinglePost(slug: string): Promise<BlogPost | null> {
   return json.data.blogPost
 }
 
-export default async function BlogPostPage({ 
-  params 
-}: { 
-  params: { slug: string } 
+export default async function BlogPostPage({
+  params
+}: {
+  params: Promise<{ slug: string }>
 }) {
-  const post = await getSinglePost(params.slug)
+  const { slug } = await params
+  const post = await getSinglePost(slug)
 
   if (!post) {
     notFound()
@@ -47,7 +55,7 @@ export default async function BlogPostPage({
     <div className="max-w-4xl mx-auto px-6 py-8">
       <article>
         <header className="mb-8">
-          <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          <h1 className="text-4xl font-bold mb-4 text-purple-600 dark:text-purple-400">
             {post.blogTitle}
           </h1>
           <div className="flex items-center gap-3 text-lg text-gray-600 dark:text-gray-400">

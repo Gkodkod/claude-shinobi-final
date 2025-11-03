@@ -1,11 +1,18 @@
 import { GET_BLOG_POSTS } from '@/lib/queries'
 import { BlogPost } from '@/lib/types'
+import { MOCK_BLOG_POSTS } from '@/lib/mockData'
 import Link from 'next/link'
 import BlogSidebar from '@/components/BlogSidebar'
 import Avatar from '@/components/ui/Avatar/Avatar'
 
 async function getPosts(): Promise<BlogPost[]> {
-  const response = await fetch(process.env.HYGRAPH_ENDPOINT!, {
+  // Use mock data if Hygraph endpoint is not configured
+  if (!process.env.HYGRAPH_ENDPOINT) {
+    console.log('Using mock blog data - HYGRAPH_ENDPOINT not configured')
+    return MOCK_BLOG_POSTS
+  }
+
+  const response = await fetch(process.env.HYGRAPH_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +28,7 @@ async function getPosts(): Promise<BlogPost[]> {
   }
 
   const json = await response.json()
-  
+
   if (json.errors) {
     throw new Error(`GraphQL errors: ${JSON.stringify(json.errors)}`)
   }
@@ -29,14 +36,33 @@ async function getPosts(): Promise<BlogPost[]> {
   return json.data.blogPosts
 }
 
+// Function to categorize posts based on title keywords (same as BlogSidebar)
+function categorizePost(title: string): string {
+  const titleLower = title.toLowerCase()
+
+  if (titleLower.includes('vite')) return 'Vite'
+  if (titleLower.includes('chatgpt') || titleLower.includes('gpt-4') || titleLower.includes('openai')) return 'ChatGPT & OpenAI'
+  if (titleLower.includes('claude') || titleLower.includes('anthropic')) return 'Claude & Anthropic'
+  if (titleLower.includes('copilot') || titleLower.includes('github')) return 'GitHub Copilot'
+  if (titleLower.includes('gemini') || titleLower.includes('google')) return 'Google Gemini'
+  if (titleLower.includes('grok') || titleLower.includes('x.ai')) return 'Grok'
+  if (titleLower.includes('cursor') || titleLower.includes('continue') || titleLower.includes('codeium')) return 'AI Editors'
+  if (titleLower.includes('agent') || titleLower.includes('autogpt') || titleLower.includes('langchain') || titleLower.includes('crewai')) return 'AI Agents'
+  if (titleLower.includes('mcp') || titleLower.includes('model context protocol')) return 'MCP'
+  if (titleLower.includes('rag') || titleLower.includes('vector') || titleLower.includes('embedding') || titleLower.includes('semantic search')) return 'RAG & Embeddings'
+  if (titleLower.includes('prompt')) return 'Prompt Engineering'
+
+  return 'General'
+}
+
 function getPreviewText(html: string, maxLength: number = 100): string {
   // Strip HTML tags and decode HTML entities
   const textContent = html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
-  
+
   if (textContent.length <= maxLength) {
     return textContent
   }
-  
+
   return textContent.substring(0, maxLength).trim() + '...'
 }
 
@@ -67,8 +93,18 @@ function BlogPostCard({ post }: { post: BlogPost }) {
   )
 }
 
-export default async function BlogPage() {
-  const posts = await getPosts()
+export default async function BlogPage({
+  searchParams
+}: {
+  searchParams: Promise<{ category?: string }>
+}) {
+  const { category } = await searchParams
+  const allPosts = await getPosts()
+
+  // Filter posts by category if specified
+  const posts = category
+    ? allPosts.filter(post => categorizePost(post.blogTitle) === category)
+    : allPosts
 
   return (
     <div className="min-h-screen bg-background">
@@ -77,15 +113,16 @@ export default async function BlogPage() {
         <div className="max-w-4xl mx-auto px-6 py-16">
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-6 text-secondary">
-              Blog Posts
+              {category ? `${category} Posts` : 'Blog Posts'}
             </h1>
             <div className="max-w-2xl mx-auto">
-
               <p className="text-base text-muted/80">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse, consectetur adipiscing elit, cillum dolore eu fugiat nulla pariatur.
+                {category
+                  ? `Explore our ${posts.length} post${posts.length !== 1 ? 's' : ''} about ${category}`
+                  : 'Duis aute irure dolor in reprehenderit in voluptate velit esse, consectetur adipiscing elit, cillum dolore eu fugiat nulla pariatur.'
+                }
               </p>
             </div>
-    
           </div>
         </div>
         {/* Decorative elements */}
@@ -122,7 +159,7 @@ export default async function BlogPage() {
 
             {/* Sidebar - Right Third */}
             <div className="lg:col-span-1">
-              <BlogSidebar />
+              <BlogSidebar posts={allPosts} selectedCategory={category} />
             </div>
           </div>
         </div>
