@@ -7,24 +7,24 @@ interface ButtonProps {
   className?: string
 }
 
-function Button({ 
-  children, 
-  variant = 'primary', 
-  onClick, 
-  disabled = false, 
+function Button({
+  children,
+  variant = 'primary',
+  onClick,
+  disabled = false,
   type = 'button',
   className = ''
 }: ButtonProps) {
-  const baseClasses = 'px-8 py-4 rounded-2xl font-bold text-lg cursor-pointer transition-all duration-200 outline-none focus:ring-3 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 active:shadow-md'
-  
+  const baseClasses = 'px-12 py-5 rounded-full font-black text-xl uppercase tracking-wide cursor-pointer transition-all duration-150 outline-none focus:ring-4 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_0_0_rgba(0,0,0,0.2),0_13px_20px_0_rgba(0,0,0,0.15)] hover:shadow-[0_6px_0_0_rgba(0,0,0,0.2),0_10px_15px_0_rgba(0,0,0,0.15)] active:shadow-[0_2px_0_0_rgba(0,0,0,0.2),0_3px_8px_0_rgba(0,0,0,0.15)] hover:translate-y-[2px] active:translate-y-[6px] relative border-2'
+
   const variantClasses = {
-    primary: 'bg-gradient-to-b from-primary to-primary/80 text-white hover:from-primary/90 hover:to-primary/70 focus:ring-primary/30 border-b-4 border-primary/60',
-    secondary: 'bg-gradient-to-b from-secondary to-secondary/80 text-white dark:text-black hover:from-secondary/90 hover:to-secondary/70 focus:ring-secondary/30 border-b-4 border-secondary/60',
-    success: 'bg-gradient-to-b from-success to-success/80 text-white hover:from-success/90 hover:to-success/70 focus:ring-success/30 border-b-4 border-success/60',
-    warning: 'bg-gradient-to-b from-warning to-warning/80 text-white hover:from-warning/90 hover:to-warning/70 focus:ring-warning/30 border-b-4 border-warning/60',
-    danger: 'bg-gradient-to-b from-danger to-danger/80 text-white hover:from-danger/90 hover:to-danger/70 focus:ring-danger/30 border-b-4 border-danger/60',
-    black: 'bg-gradient-to-b from-gray-800 to-black text-white hover:from-gray-700 hover:to-gray-900 focus:ring-black/30 border-b-4 border-black',
-    white: 'bg-gradient-to-b from-white to-gray-100 text-black hover:from-gray-50 hover:to-gray-200 focus:ring-white/30 border-b-4 border-gray-300'
+    primary: 'bg-gradient-to-b from-primary via-primary to-primary/90 text-white hover:from-primary/95 hover:to-primary/85 focus:ring-primary/40 border-primary/40',
+    secondary: 'bg-gradient-to-b from-secondary via-secondary to-secondary/90 text-white dark:text-black hover:from-secondary/95 hover:to-secondary/85 focus:ring-secondary/40 border-secondary/40',
+    success: 'bg-gradient-to-b from-success via-success to-success/90 text-white hover:from-success/95 hover:to-success/85 focus:ring-success/40 border-success/40',
+    warning: 'bg-gradient-to-b from-warning via-warning to-warning/90 text-white hover:from-warning/95 hover:to-warning/85 focus:ring-warning/40 border-warning/40',
+    danger: 'bg-gradient-to-b from-danger via-danger to-danger/90 text-white hover:from-danger/95 hover:to-danger/85 focus:ring-danger/40 border-danger/40',
+    black: 'bg-gradient-to-b from-gray-700 via-gray-800 to-gray-900 text-white hover:from-gray-600 hover:to-gray-800 focus:ring-gray-500/40 border-gray-900/40',
+    white: 'bg-gradient-to-b from-gray-50 via-white to-gray-100 text-gray-800 hover:from-white hover:to-gray-50 focus:ring-gray-300/40 border-gray-200'
   }
 
   const buttonClass = [
