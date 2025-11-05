@@ -82,7 +82,7 @@ export default function Preview() {
   };
 
   return (
-    <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start' }}>
+    <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem', width: '100%', maxWidth: '100%' }}>
       <section>
         <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>Typography & Theme Showcase</h1>
         <p style={{ fontSize: '1.2rem', lineHeight: '1.6', maxWidth: '600px', marginBottom: '2rem' }}>
@@ -682,7 +682,7 @@ export default function Preview() {
         </div>
       </section>
 
-      <section style={{ marginTop: '3rem' }}>
+      <section style={{ marginTop: '3rem', maxWidth: '900px' }}>
         <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>SpreadsheetGrid Component</h2>
         <p style={{ marginBottom: '1.5rem', maxWidth: '600px' }}>
           A spreadsheet-like grid component for displaying and editing tabular data with keyboard navigation and cell editing capabilities. <strong>All grids support column sorting</strong> - click any column header to sort (ascending → descending → unsorted).
