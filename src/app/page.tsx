@@ -4,12 +4,12 @@ import Button from "@/components/ui/Button/Button";
 
 export default function Home() {
   return (
-    <div style={{ 
-      padding: '4rem 2rem', 
-      display: 'flex', 
-      flexDirection: 'column', 
-      gap: '2rem', 
-      alignItems: 'center', 
+    <div style={{
+      padding: '4rem 2rem',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2rem',
+      alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
       textAlign: 'center'
@@ -27,7 +27,7 @@ export default function Home() {
             Visit Blog
           </Button>
         </Link>
-        
+
         <Link href="/preview">
           <Button variant="secondary" className="text-lg px-8 py-4">
             Preview Components

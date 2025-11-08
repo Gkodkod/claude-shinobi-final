@@ -7,8 +7,9 @@ import Icon from "@/components/ui/Icon/Icon";
 import Modal from "@/components/ui/Modal/Modal";
 import Calendar from "@/components/ui/Calendar/Calendar";
 import SpreadsheetGrid from "@/components/ui/SpreadsheetGrid/SpreadsheetGrid";
+import Input from "@/components/ui/Input/Input";
 import type { ColumnDef, CellData, SortConfig } from "@/components/ui/SpreadsheetGrid/SpreadsheetGrid";
-import { Star, Rocket, Gem, Target, Zap, Check, AlertTriangle, Flame, Home, Settings, ThumbsUp, Bell, Trash2, FileText, Camera, Paperclip, BarChart3, Link2, Circle } from "lucide-react";
+import { Star, Rocket, Gem, Target, Zap, Check, AlertTriangle, Flame, Home, Settings, ThumbsUp, Bell, Trash2, FileText, Camera, Paperclip, BarChart3, Link2, Circle, Search, Mail, Eye } from "lucide-react";
 
 export default function Preview() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -677,6 +678,182 @@ export default function Preview() {
                   ? `${selectedRange.start.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${selectedRange.end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
                   : 'Click a start date, then click an end date'}
               </p>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section style={{ marginTop: '3rem' }}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Input Component</h2>
+        <p style={{ marginBottom: '1.5rem', maxWidth: '600px' }}>
+          Modern input fields with semi-transparent backgrounds, multiple variants, sizes, and comprehensive states for form building.
+        </p>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Variants</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Primary</p>
+            <Input variant="primary" placeholder="Primary variant" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Secondary</p>
+            <Input variant="secondary" placeholder="Secondary variant" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Success</p>
+            <Input variant="success" placeholder="Success variant" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Warning</p>
+            <Input variant="warning" placeholder="Warning variant" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Danger</p>
+            <Input variant="danger" placeholder="Danger variant" />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Sizes</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem', maxWidth: '400px' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Small</p>
+            <Input size="sm" placeholder="Small input" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Medium (default)</p>
+            <Input size="md" placeholder="Medium input" />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Large</p>
+            <Input size="lg" placeholder="Large input" />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>States</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div>
+            <Input
+              label="With Label"
+              placeholder="Enter text"
+              helperText="This is helper text"
+            />
+          </div>
+          <div>
+            <Input
+              label="Required Field"
+              placeholder="This field is required"
+              required
+            />
+          </div>
+          <div>
+            <Input
+              label="Error State"
+              placeholder="Invalid input"
+              error
+              errorMessage="This field is required"
+            />
+          </div>
+          <div>
+            <Input
+              label="Disabled"
+              placeholder="Cannot edit"
+              disabled
+              value="Disabled value"
+            />
+          </div>
+          <div>
+            <Input
+              label="Loading"
+              placeholder="Please wait..."
+              loading
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>With Icons</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Left Icon (Search)</p>
+            <Input
+              placeholder="Search..."
+              leftIcon={<Search size={20} />}
+            />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Left Icon (Email)</p>
+            <Input
+              type="email"
+              placeholder="Email address"
+              leftIcon={<Mail size={20} />}
+            />
+          </div>
+          <div>
+            <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: 'var(--muted)' }}>Right Icon (Password)</p>
+            <Input
+              type="password"
+              placeholder="Password"
+              rightIcon={<Eye size={20} />}
+            />
+          </div>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Features</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          <Card variant="primary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>✨ Semi-transparent</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Modern glassmorphic design</p>
+          </Card>
+          <Card variant="secondary" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>🎨 5 Variants</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Color themes for all states</p>
+          </Card>
+          <Card variant="success" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>↔️ Icon Support</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Left and right icons</p>
+          </Card>
+          <Card variant="warning" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>♿ Accessible</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Full ARIA support</p>
+          </Card>
+          <Card variant="danger" size="sm">
+            <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>⚡ Loading State</h4>
+            <p style={{ margin: '0', fontSize: '0.8rem' }}>Built-in spinner</p>
+          </Card>
+        </div>
+
+        <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Practical Example: Contact Form</h3>
+        <div style={{ maxWidth: '500px' }}>
+          <Card variant="primary" size="lg">
+            <h4 style={{ margin: '0 0 1.5rem 0', fontSize: '1.3rem', textAlign: 'center' }}>Get in Touch</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <Input
+                label="Full Name"
+                placeholder="John Doe"
+                required
+                leftIcon={<span style={{ fontSize: '1.2rem' }}>👤</span>}
+              />
+              <Input
+                label="Email Address"
+                type="email"
+                placeholder="john@example.com"
+                helperText="We'll never share your email"
+                required
+                leftIcon={<Mail size={20} />}
+              />
+              <Input
+                label="Phone Number"
+                type="tel"
+                placeholder="+1 (555) 000-0000"
+                leftIcon={<span style={{ fontSize: '1.2rem' }}>📱</span>}
+              />
+              <Input
+                label="Company"
+                placeholder="Your company name"
+                leftIcon={<span style={{ fontSize: '1.2rem' }}>🏢</span>}
+              />
+              <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+                <Button variant="primary">Submit Form</Button>
+              </div>
             </div>
           </Card>
         </div>
