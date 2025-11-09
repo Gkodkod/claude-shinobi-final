@@ -25,8 +25,15 @@ export default function About() {
           <h2 className="text-4xl font-bold text-foreground mb-6">The Blog</h2>
           <div className="space-y-4 text-foreground/80 leading-relaxed">
             <p>
-              The Shinobi blog is a content-rich platform designed for web developers and tech enthusiasts.
-              It features a clean, modern interface that emphasizes readability and user experience.
+              The Shinobi blog explores the fascinating world of artificial intelligence, machine learning,
+              and emerging AI technologies. It features in-depth articles, tutorials, and insights about AI topics
+              ranging from foundational concepts to cutting-edge developments in the field.
+            </p>
+            <p>
+              Our content covers a diverse range of AI subjects including natural language processing,
+              computer vision, generative AI, AI ethics, prompt engineering, and practical applications
+              of AI in software development. Whether you're an AI enthusiast, researcher, or developer
+              looking to integrate AI into your projects, you'll find valuable insights here.
             </p>
             <p>
               Blog posts are powered by <strong>Hygraph</strong>, a headless GraphQL CMS that provides
